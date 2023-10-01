@@ -1,12 +1,15 @@
 async function convert(satoshis, conversionType) {
+    // URL is changed every time that user git the slider.
     const apiUrl = conversionType === 0
       ? 'https://criptoya.com/api/btc/ars'
       : 'https://criptoya.com/api/btc/usd';
   
+    // Function call to API to get data.
     try {
       const response = await fetch(apiUrl);
       const data = await response.json();
   
+      // BTCUSD is feed by Letsbit, Bitso, Decrypto. BTCARS is feed by Lemon, Binance, Belo. Feed change everytime user git the slider.
       let exchanges = [];
       if (conversionType === 0) {
         exchanges = ["lemoncash", "binance", "belo"];
@@ -14,6 +17,7 @@ async function convert(satoshis, conversionType) {
         exchanges = ["letsbit", "bitso", "decrypto"];
       }
   
+      // When exchange data is not available the average is adjusted.
       let totalPrices = 0;
       let numberOfExchanges = 0;
       exchanges.forEach(exchange => {
@@ -23,6 +27,7 @@ async function convert(satoshis, conversionType) {
         }
       });
   
+      // Final result is defined, also error messages.
       if (numberOfExchanges > 0) {
         const averagePrice = totalPrices / numberOfExchanges;
         const satoshiValue = satoshis / 100000000;
