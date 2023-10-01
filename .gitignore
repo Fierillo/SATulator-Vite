@@ -22,7 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-public
+public/
+src/assets/
 
 # App.jsx Backup
 App-backup.jsx
